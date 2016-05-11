@@ -19,17 +19,55 @@ it and understand how testing works .
 struct node{
 	struct node * left;
 	int data;
-	struct node *right;
+	struct node * right;
 };
 
-
-void inorder(struct node *root, int *arr){
-	
+void my_inorder(struct node *root, int *arr, int *count)
+{
+	if (root == NULL || arr == NULL)
+	{
+		return;
+	}
+	my_inorder(root->left, arr, count);
+	arr[*count] = root->data;
+	(*count)++;
+	my_inorder(root->right, arr, count);
 }
-void preorder(struct node *root, int *arr){
-	
+void inorder(struct node *root, int *arr)
+{
+	int temp = 0;
+	my_inorder(root, arr, &temp);
 }
-void postorder(struct node *root, int *arr){
-	
+void my_preorder(struct node *root, int *arr, int *count)
+{
+	if (root == NULL || arr == NULL)
+	{
+		return;
+	}
+	arr[*count] = root->data;
+	(*count)++;
+	my_preorder(root->left, arr, count);
+	my_preorder(root->right, arr, count);
+}
+void preorder(struct node *root, int *arr)
+{
+	int temp = 0;
+	my_preorder(root, arr, &temp);
+}
+void my_postorder(struct node *root, int *arr, int *count)
+{
+	if (root == NULL || arr == NULL)
+	{
+		return;
+	}
+	my_postorder(root->left, arr, count);
+	my_postorder(root->right, arr, count);
+	arr[*count] = root->data;
+	(*count)++;
+}
+void postorder(struct node *root, int *arr)
+{
+	int temp = 0;
+	my_postorder(root, arr, &temp);
 }
 

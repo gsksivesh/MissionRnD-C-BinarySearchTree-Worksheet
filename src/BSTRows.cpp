@@ -31,7 +31,6 @@ struct node{
 
 
 
-
 void height(struct node * root, int *arr, int *arr_index, int level, int max_height)
 {
 	if (root == NULL)
