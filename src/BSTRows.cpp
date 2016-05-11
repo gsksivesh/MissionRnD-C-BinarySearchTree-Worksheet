@@ -31,7 +31,36 @@ struct node{
 
 
 
+
+void height(struct node * root, int *arr, int *arr_index, int level, int max_height)
+{
+	if (root == NULL)
+	{
+		return;
+	}
+	if (level == max_height)
+	{
+		arr[*arr_index] = root->data;
+		(*arr_index)++;
+		return;
+	}
+	height(root->right, arr, arr_index, level + 1, max_height);
+	height(root->left, arr, arr_index, level + 1, max_height);
+}
+
 int* BSTRighttoLeftRows(struct node* root)
 {
-    return NULL;
+	int *arr;
+	int arr_index = 0, i, temp;
+	if (root == NULL)
+		return NULL;
+	arr = (int*)malloc(sizeof(int)*100);
+	for (i = 1;; i++)
+	{
+		temp = arr_index;
+		height(root, arr, &arr_index, 1, i);
+		if (temp == arr_index)
+			break;
+	}
+	return arr;
 }
