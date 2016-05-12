@@ -31,7 +31,71 @@ struct node{
 	int data;
 	struct node *right;
 };
+void my_inorder_fix(struct node *root, struct node **last_visit, int *flag, struct node **first)
+{
+	int temp;
+	if (root == NULL)
+	{
+		return;
+	}
+	if ((*flag) == 0)
+	{
+		return;
+	}
+	my_inorder_fix(root->left, last_visit, flag, first);
+	if ((*flag) == 0)
+	{
+		return;
+	}
+	if ((*last_visit) != NULL && ((*last_visit)->data > root->data))
+	{
+		if ((*first) == NULL)
+		{
+			(*first) = (*last_visit);
+		}
+		else
+		{
+			temp = (*first)->data;
+			(*first)->data = root->data;
+			root->data = temp;
+			(*flag) = 0;
+		}
+	}
+	(*last_visit) = root;
+	my_inorder_fix(root->right, last_visit, flag, first);
+	if ((*flag) == 0)
+	{
+		return;
+	}
+}
 
-void fix_bst(struct node *root){
+void fix_bst(struct node *root)
+{
+	struct node *last_visit = NULL, *second = NULL;
+	int flag = 1, temp;
+	if (root == NULL)
+		return;
 
+
+	second = NULL;
+	flag = 1;
+	last_visit = NULL;
+	my_inorder_fix(root, &last_visit, &flag, &second);
+	if (flag == 0 || second == NULL)
+		return;
+	else
+	{
+		if (second->data < last_visit->data)
+		{
+			temp = second->data;
+			second->data = root->data;
+			root->data = temp;
+		}
+		else
+		{
+			temp = last_visit->data;
+			last_visit->data = second->data;
+			second->data = temp;
+		}
+	}
 }
